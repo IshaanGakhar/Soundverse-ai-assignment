@@ -46,7 +46,7 @@ def self_attention(Q, K, V, scale=True):
     
     # apply softmax to each row
     attention_weights = np.exp(attention_scores)
-    attention_weights /= np.sum(attention_weights, axis=1)
+    attention_weights /= np.sum(attention_weights, axis=1, keepdims=True)
     
     # self attention = attention weights * V (as per scaled dot product attention)
     output = np.dot(attention_weights, V)

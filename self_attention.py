@@ -37,7 +37,7 @@ def self_attention(Q, K, V, scale=True):
         Output of self-attention
     """
     # attention score = Q * K^T (transposed since we want to match query and key dimensions)
-    attention_scores = np.dot(Q, K.T)
+    attention_scores = np.dot(Q, K.T).astype(float)
     
     # scaling to prevent extremely small or large gradients
     if scale:
@@ -46,7 +46,7 @@ def self_attention(Q, K, V, scale=True):
     
     # apply softmax to each row
     attention_weights = np.exp(attention_scores)
-    attention_weights /= np.sum(attention_weights, axis=1, keepdims=True)
+    attention_weights /= np.sum(attention_weights, axis=1)
     
     # self attention = attention weights * V (as per scaled dot product attention)
     output = np.dot(attention_weights, V)

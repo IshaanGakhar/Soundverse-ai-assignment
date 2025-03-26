@@ -36,7 +36,7 @@ def self_attention(Q, K, V, scale=True):
     Returns:
         Output of self-attention
     """
-    # attention score = Q * K^T (transposed since we want to match query and key dimensions) (need to match dimensions? why arent they already matched)
+    # attention score = Q * K^T (transposed since we want to match query and key dimensions)
     attention_scores = np.dot(Q, K.T)
     
     # scaling to prevent extremely small or large gradients

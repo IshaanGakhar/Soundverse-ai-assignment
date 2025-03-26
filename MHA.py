@@ -37,9 +37,9 @@ def multi_head_attention(Q, K, V, n_heads=2, scale=True):
         # compute attention scores
         attention_scores = np.dot(Q_head, K_head.T)
         
-        # Optional scaling
-        # if scale:
-        #     attention_scores /= np.sqrt(head_dim)
+        # scaling
+        if scale:
+            attention_scores /= np.sqrt(head_dim)
         
         # compute attention weights using softmax
         attention_weights = np.exp(attention_scores)

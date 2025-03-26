@@ -13,7 +13,7 @@ def compute_qkv(X, W_q, W_k, W_v):
         K: Key matrix
         V: Value matrix
     """
-    # query matrix = input * query weights (where do u get weights, what do they symbolise)
+    # query matrix = input * query weights (all vectors)
     Q = np.dot(X, W_q)
     
     # key matrix = input * key weights
@@ -39,16 +39,16 @@ def self_attention(Q, K, V, scale=True):
     # attention score = Q * K^T (transposed since we want to match query and key dimensions) (need to match dimensions? why arent they already matched)
     attention_scores = np.dot(Q, K.T)
     
-    # Optional scaling to prevent extremely small or large gradients
-    # if scale:
-    #     d_k = K.shape[1]  # Dimension of key vectors
-    #     attention_scores /= np.sqrt(d_k)
+    # scaling to prevent extremely small or large gradients
+    if scale:
+        d_k = K.shape[1]
+        attention_scores /= np.sqrt(d_k)
     
-    # apply softmax to each row (need for softmax?)
+    # apply softmax to each row
     attention_weights = np.exp(attention_scores)
     attention_weights /= np.sum(attention_weights, axis=1, keepdims=True)
     
-    # self attention = attention weights * V
+    # self attention = attention weights * V (as per scaled dot product attention)
     output = np.dot(attention_weights, V)
     
     return output

@@ -35,7 +35,7 @@ def multi_head_attention(Q, K, V, n_heads=2, scale=True):
         V_head = V_heads[:, i, :]
         
         # compute attention scores
-        attention_scores = np.dot(Q_head, K_head.T)
+        attention_scores = np.dot(Q_head, K_head.T).astype(float)
         
         # scaling
         if scale:
